@@ -1,14 +1,9 @@
 {
-  "name": "doca-bootstrap-theme",
-  "version": "0.2.0",
-  "description": "Doca theme using Twitter Bootstrap",
+  "name": "doca-decipher-theme",
+  "version": "0.0.1",
+  "description": "Doca theme using Twitter Bootstrap for DECIPHER",
   "main": "index.js",
-  "author": "Vojtech Miksu <vojtech@miksu.cz>",
-  "license": "BSD-3-Clause",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cloudflare/doca-bootstrap-theme"
-  },
+  "author": "DECIPHER",
   "scripts": {
     "build": "npm run clean && mkdir -p build && babel components --out-dir build",
     "lint": "eslint components || true",
