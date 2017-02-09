@@ -3,6 +3,7 @@ const Constraints = require('./constraints');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const List = require('immutable').List;
 const ImmutablePropTypes = require('react-immutable-proptypes');
+const List = require('immutable').List;
 const Component = require('react-pure-render/component');
 const Definition = require('./definition');
 
@@ -27,12 +28,10 @@ class ObjectDefinitionTable extends Component {
           {definitions && definitions.entrySeq().map(([key, definition]) =>
             <tr key={key}>
               <td>
-                <p>
-                  <strong>{key}</strong><br />
+                <strong>{key.toLowerCase()}</strong><br />
                   <small><em>{List.isList(definition.get('type')) ?
                   definition.get('type').valueSeq().join(', ') :
                   definition.get('type')}</em></small>
-                </p>
               </td>
               <td>
                 {definition.get('description') &&
