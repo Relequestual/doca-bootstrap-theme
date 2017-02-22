@@ -41,7 +41,7 @@ class Schema extends Component {
               <p>
                 <a onClick={this.handleToggle} className="btn btn-info">
                   <span>{showDefinition ? 'Hide' : 'Show'}</span>{' '}
-                  properties and constraints defined on the object
+                  object definition
                 </a>
               </p>
             }
