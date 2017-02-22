@@ -3,7 +3,6 @@ const Constraints = require('./constraints');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const List = require('immutable').List;
 const ImmutablePropTypes = require('react-immutable-proptypes');
-const List = require('immutable').List;
 const Component = require('react-pure-render/component');
 const Definition = require('./definition');
 
