@@ -1,5 +1,19 @@
 # doca-bootstrap-theme
 
+This needs to be updated / changed.
+
+If you want to develop this locally using npm link and not publishing to npm,
+you will need to npm uninstall react, and then npm link react from the doca folder.
+
+
+
+
+
+
+
+
+------
+
 Simple [Twitter Boostrap 3](http://getbootstrap.com/) based theme for [doca](https://github.com/cloudflare/doca).
 
 It's supposed to be used in combination with [doca](https://github.com/cloudflare/doca) - a tool that scaffolds API documentation based on JSON HyperSchemas.
