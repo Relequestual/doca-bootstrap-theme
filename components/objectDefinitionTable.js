@@ -28,9 +28,9 @@ class ObjectDefinitionTable extends Component {
             <tr key={key}>
               <td>
                 <strong>{key.toLowerCase()}</strong><br />
-                  <small><em>{List.isList(definition.get('type')) ?
-                  definition.get('type').valueSeq().join(', ') :
-                  definition.get('type')}</em></small>
+                <small><em>{List.isList(definition.get('type')) ?
+                definition.get('type').valueSeq().join(', ') :
+                definition.get('type')}</em></small>
               </td>
               <td>
                 {definition.get('description') &&
