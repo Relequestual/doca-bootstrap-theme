@@ -22,7 +22,7 @@ class Constraints extends Component {
     const { constraints } = this.props;
     if (!constraints) return <div />;
     return (
-      <ul className="constraints">
+      <ul className="constraints list-unstyled">
         {constraints.has('default') &&
           <li>{`default value: ${constraints.get('default')}`}</li>
         }
@@ -44,10 +44,9 @@ class Constraints extends Component {
         }
 
         {constraints.get('enum') ?
-          <li>valid values: {constraints.get('enum').valueSeq().map(value =>
-            <code key={value}>{this.considerType(value)}</code>
-          )
-          .reduce((prev, curr) => [prev, ', ', curr])}</li>
+          <li>valid values: <ul>{constraints.get('enum').valueSeq().map(value =>
+            <li key={value}><code>{this.considerType(value)}</code></li>
+          )}</ul></li>
         :
           constraints.get('type') === 'boolean' && <li>valid values: (true,false)</li>
         }
