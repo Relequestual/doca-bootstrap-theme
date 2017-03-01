@@ -9,21 +9,19 @@ const Definition = require('./definition');
 class ObjectDefinitionTable extends Component {
 
   static propTypes = {
-    definitions: ImmutablePropTypes.map,
+    sections: ImmutablePropTypes.list.isRequired,
   };
 
-  render() {
-    const { definitions } = this.props;
+  TBody(props) {
+    const definitions = props.definitions;
+    const title = props.title;
     return (
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th><p>Name <small>/type</small></p></th>
-            <th><p>Description <small>/example</small></p></th>
-            <th><p>Constraints</p></th>
-          </tr>
-        </thead>
-        <tbody>
+      <tbody>
+          {
+            definitions.count() > 0 && title && <tr>
+              <td colSpan="3" className="bg-info"><h4>{title}</h4></td>
+            </tr>
+          }
           {definitions && definitions.entrySeq().map(([key, definition]) =>
             <tr key={key}>
               <td>
@@ -70,11 +68,31 @@ class ObjectDefinitionTable extends Component {
               </td>
             </tr>
           )}
-        </tbody>
-      </table>
+      </tbody>
     );
   }
 
+  render() {
+    const { sections } = this.props;
+
+    return (
+      <div className="table-responsive">
+        <table className="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th><p>Name <small>/type</small></p></th>
+              <th><p>Description <small>/example</small></p></th>
+              <th><p>Constraints</p></th>
+            </tr>
+          </thead>
+          {sections.count() > 0 && sections.entrySeq().map(([key, section]) =>
+            <this.TBody title={section.title} definitions={section.definitions} key={key} />
+          )}
+        </table>
+      </div>
+    );
+  }
 }
+
 
 module.exports = ObjectDefinitionTable;

@@ -3,6 +3,7 @@ const Endpoint = require('./endpoint');
 const ObjectDefinitionTable = require('./objectDefinitionTable');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const ImmutablePropTypes = require('react-immutable-proptypes');
+const List = require('immutable').List;
 const Component = require('react-pure-render/component');
 const ExampleObject = require('./exampleObject');
 
@@ -59,7 +60,9 @@ class Schema extends Component {
                         </div>
                       }
                       {obj.get('example') && <ExampleObject example={obj.get('example')} />}
-                      <ObjectDefinitionTable definitions={obj.get('all_props')} />
+                      <ObjectDefinitionTable
+                        sections={new List([{ definitions: obj.get('all_props') }])}
+                      />
                     </div>
                   )}
                 </div>
@@ -70,7 +73,9 @@ class Schema extends Component {
                   }
 
                   <ObjectDefinitionTable
-                    definitions={schema.getIn(['object_definition', 'all_props'])}
+                    sections={new List([
+                      { definitions: schema.getIn(['object_definition', 'all_props']) },
+                    ])}
                   />
                 </div>
               }

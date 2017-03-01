@@ -2,6 +2,7 @@ const React = require('react');
 const ObjectDefinitionTable = require('./objectDefinitionTable');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const ImmutablePropTypes = require('react-immutable-proptypes');
+const List = require('immutable').List;
 const Component = require('react-pure-render/component');
 
 class Endpoint extends Component {
@@ -12,6 +13,7 @@ class Endpoint extends Component {
 
   render() {
     const { link } = this.props;
+    const anyProps = link.hasIn(['parameters', 'all_props']);
 
     return (
       <section key={link.get('html_id')} id={link.get('html_id')} className="list-group-item">
@@ -23,32 +25,26 @@ class Endpoint extends Component {
         <pre>
           {link.get('method')} {link.get('uri')}
         </pre>
-
-        {link.getIn(['parameters', 'required_props', 0]) &&
-          <div>
-            <h4>Required parameters</h4>
-            <ObjectDefinitionTable
-              definitions={
-                link.getIn(['parameters', 'all_props']).filter((val, key) =>
-                  link.getIn(['parameters', 'required_props']).indexOf(key) > -1
-                )
-              }
-            />
-          </div>
-        }
-
-        {link.getIn(['parameters', 'optional_props', 0]) &&
-          <div>
-            <h4>Optional parameters</h4>
-            <ObjectDefinitionTable
-              definitions={
-                link.getIn(['parameters', 'all_props']).filter((val, key) =>
-                  link.getIn(['parameters', 'optional_props']).indexOf(key) > -1
-                )
-              }
-            />
-          </div>
-        }
+        {anyProps && <ObjectDefinitionTable
+          sections={new List([
+            {
+              title: 'Required',
+              definitions:
+              link.hasIn(['parameters', 'required_props']) ?
+              link.getIn(['parameters', 'all_props']).filter((val, key) =>
+                link.getIn(['parameters', 'required_props']).indexOf(key) > -1
+              ) : [],
+            },
+            {
+              title: 'Optional',
+              definitions:
+              link.hasIn(['parameters', 'optional_props']) ?
+              link.getIn(['parameters', 'all_props']).filter((val, key) =>
+                link.getIn(['parameters', 'optional_props']).indexOf(key) > -1
+              ) : [],
+            },
+          ])}
+        />}
 
         <h4>cURL</h4>
         <div>

@@ -22,7 +22,7 @@ class Definition extends Component {
 
   renderDefTable(definitions) {
     const ObjectDefinitionTable = require('./objectDefinitionTable');
-    return <ObjectDefinitionTable definitions={definitions} />;
+    return <ObjectDefinitionTable sections={[{ definitions }]} />;
   }
 
   render() {
