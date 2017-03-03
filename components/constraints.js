@@ -24,36 +24,39 @@ class Constraints extends Component {
     return (
       <ul className="constraints list-unstyled">
         {constraints.has('default') &&
-          <li>{`default value: ${constraints.get('default')}`}</li>
+          <li>Default value: <code>
+          {this.considerType(constraints.get('default'))}
+          </code></li>
         }
 
         {(constraints.get('minLength') || constraints.get('minLength') === 0) &&
-          <li>min length: {constraints.get('minLength')}</li>
+          <li>Min length: {constraints.get('minLength')}</li>
         }
 
         {(constraints.get('maxLength') || constraints.get('maxLength') === 0) &&
-          <li>max length: {constraints.get('maxLength')}</li>
+          <li>Max length: {constraints.get('maxLength')}</li>
         }
 
         {(constraints.get('minimum') || constraints.get('minimum') === 0) &&
-          <li>min value: {constraints.get('minimum')}</li>
+          <li>Min value: <code>{constraints.get('minimum')}</code></li>
         }
 
         {(constraints.get('maximum') || constraints.get('maximum') === 0) &&
-          <li>max value: {constraints.get('maximum')}</li>
+          <li>Max value: <code>{constraints.get('maximum')}</code></li>
         }
 
         {constraints.get('enum') ?
-          <li>valid values: <ul>{constraints.get('enum').valueSeq().map(value =>
+          <li>Valid values: <ul>{constraints.get('enum').valueSeq().map(value =>
             <li key={value}><code>{this.considerType(value)}</code></li>
           )}</ul></li>
         :
-          constraints.get('type') === 'boolean' && <li>valid values: (true,false)</li>
+        constraints.get('type') === 'boolean' &&
+          <li>Valid values: <code>true</code>, <code>false</code></li>
         }
 
-        {constraints.get('readOnly') && <li>read only</li>}
-        {constraints.get('pattern') && <li>pattern: {constraints.get('pattern')}</li>}
-        {constraints.get('notes') && <li>notes: {constraints.get('notes')}</li>}
+        {constraints.get('readOnly') && <li>Read only</li>}
+        {constraints.get('pattern') && <li>Pattern: {constraints.get('pattern')}</li>}
+        {constraints.get('notes') && <li>Notes: {constraints.get('notes')}</li>}
       </ul>
     );
   }
