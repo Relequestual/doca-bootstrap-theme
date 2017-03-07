@@ -3,9 +3,18 @@ const Endpoint = require('./endpoint');
 const ObjectDefinitionTable = require('./objectDefinitionTable');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const ImmutablePropTypes = require('react-immutable-proptypes');
-const List = require('immutable').List;
+const { List, OrderedMap } = require('immutable');
 const Component = require('react-pure-render/component');
 const ExampleObject = require('./exampleObject');
+
+const orderProperties = (order, props) =>
+  new OrderedMap(order.toArray().
+    reduce((hash, prop) =>
+      Object.assign(hash, {
+        [prop]: props.get(prop),
+      }), {}
+    )
+  );
 
 class Schema extends Component {
 
@@ -22,6 +31,7 @@ class Schema extends Component {
       showDefinition: !prevState.showDefinition,
     }));
   };
+
 
   render() {
     const { schema } = this.props;
@@ -61,7 +71,12 @@ class Schema extends Component {
                       }
                       {obj.get('example') && <ExampleObject example={obj.get('example')} />}
                       <ObjectDefinitionTable
-                        sections={new List([{ definitions: obj.get('all_props') }])}
+                        sections={new List([
+                          { definitions: orderProperties(
+                            schema.get('properties_order'),
+                            obj.get('all_props'),
+                          ) },
+                        ])}
                       />
                     </div>
                   )}
@@ -71,10 +86,12 @@ class Schema extends Component {
                   {schema.getIn(['object_definition', 'example']) &&
                     <ExampleObject example={schema.getIn(['object_definition', 'example'])} />
                   }
-
                   <ObjectDefinitionTable
                     sections={new List([
-                      { definitions: schema.getIn(['object_definition', 'all_props']) },
+                      { definitions: orderProperties(
+                        schema.get('properties_order'),
+                        schema.getIn(['object_definition', 'all_props']),
+                      ) },
                     ])}
                   />
                 </div>
@@ -87,7 +104,13 @@ class Schema extends Component {
             .get('links')
             .filter(link => !link.get('private'))
             .valueSeq()
-            .map(link => <Endpoint key={link.get('html_id')} link={link} />)
+            .map(link =>
+              <Endpoint
+                key={link.get('html_id')}
+                link={link}
+                ordered_properties={schema.get('properties_order')}
+              />
+            )
           }
         </div>
       </article>

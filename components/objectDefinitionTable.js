@@ -1,7 +1,7 @@
 const React = require('react');
 const Constraints = require('./constraints');
 const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
-const List = require('immutable').List;
+const { Map, List } = require('immutable');
 const ImmutablePropTypes = require('react-immutable-proptypes');
 const Component = require('react-pure-render/component');
 const Definition = require('./definition');
@@ -15,6 +15,7 @@ class ObjectDefinitionTable extends Component {
   TBody(props) {
     const definitions = props.definitions;
     const title = props.title;
+
     return (
       <tbody>
           {
@@ -24,6 +25,7 @@ class ObjectDefinitionTable extends Component {
           }
           {definitions && definitions.entrySeq().map(([key, definition]) =>
             <tr key={key}>
+
               <td>
                 <strong>{key.toLowerCase()}</strong><br />
                 <small><em>{List.isList(definition.get('type')) ?
@@ -86,7 +88,11 @@ class ObjectDefinitionTable extends Component {
             </tr>
           </thead>
           {sections.count() > 0 && sections.entrySeq().map(([key, section]) =>
-            <this.TBody title={section.title} definitions={section.definitions} key={key} />
+            <this.TBody
+              title={section.title}
+              definitions={section.definitions.filter(x => Map.isMap(x))}
+              key={key}
+            />
           )}
         </table>
       </div>
