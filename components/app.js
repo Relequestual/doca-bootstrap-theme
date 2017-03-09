@@ -1,5 +1,6 @@
 const React = require('react');
 const ImmutablePropTypes = require('react-immutable-proptypes');
+const MarkdownPreview = require('react-marked-markdown').MarkdownPreview;
 const Component = require('react-pure-render/component');
 const Sidebar = require('./sidebar');
 const Schema = require('./schema');
@@ -22,6 +23,9 @@ class App extends Component {
           </div>
           <div className="col-sm-9 col-lg-10" id="page-content-wrapper">
             <h1>{config.title}</h1>
+            {config.intro && <div>
+              <MarkdownPreview value={config.intro} />
+            </div>}
             {schemas
               .filter(schema => !schema.get('hidden'))
               .valueSeq()
