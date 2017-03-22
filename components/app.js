@@ -45,7 +45,6 @@ class App extends Component {
               dangerouslySetInnerHTML={{ __html: marked(config.intro, { renderer }) }}
             >
             </div>}
-            <h1>Objects and Endpoints</h1>
             {schemas
               .filter(schema => !schema.get('hidden'))
               .valueSeq()
